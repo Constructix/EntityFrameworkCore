@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0B642C95-CF15-40A3-B7BC-5AB9BAF61E4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkDemoConsole", "src\EntityFrameworkDemoConsole\EntityFrameworkDemoConsole.csproj", "{C85FC6D2-9F81-4D6D-88CC-C236C0931E1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C85FC6D2-9F81-4D6D-88CC-C236C0931E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C85FC6D2-9F81-4D6D-88CC-C236C0931E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C85FC6D2-9F81-4D6D-88CC-C236C0931E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C85FC6D2-9F81-4D6D-88CC-C236C0931E1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C85FC6D2-9F81-4D6D-88CC-C236C0931E1A} = {0B642C95-CF15-40A3-B7BC-5AB9BAF61E4E}
+	EndGlobalSection
+EndGlobal
