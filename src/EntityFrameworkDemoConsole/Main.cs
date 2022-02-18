@@ -3,37 +3,57 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Linq;
+using ProductsEntityFrameworkLibrary;
 
-//var options = new DbContextOptionsBuilder<ProductContext>()
-//                    //.UseInMemoryDatabase("Products")
-//                    //.UseSqlServer($@"Data Source=(localdb)\ProjectsV13;Initial Catalog=Products;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-//                    .UseSqlite(@$"Data Source=D:\Databases\SqlLite\Products.db")
-//                    .Options;
+
 var path = $@"{Environment.CurrentDirectory}\Products.db";
 using var context = new ProductContext(new DbContextOptionsBuilder<ProductContext>().UseSqlite(@$"Data Source={path}"));
+var repo = new ProductRepository(context);
 
 var newProduct = new Product()
 {
-    Name = "100x15 H3 Pine Paling",
+    Name = "90x19 Merbau",
     Description = "Fencing",
-    unitPrice = 155,
+    unitPrice = 959,
     EffectiveFrom = DateTimeOffset.Parse("01/01/2022")
 };
-var product = context.Products.FirstOrDefault(product => product.Name.Equals(newProduct.Name));
+var product = repo.GetAll().FirstOrDefault(product => product.Name.Equals(newProduct.Name));
 
 if(product == null)
 {
-    context.Products.Add(newProduct);
+    repo.Add(newProduct);
 }
-context.SaveChanges();
 
 
-Console.WriteLine("--------- PRINTING OUT PRODUCTS ----------------");
 
-Console.WriteLine($"{"Id",-10}{"Name",-30}{"Unit Price", 15}");
-foreach (var currentProduct in context.Products)
+
+PrintProducts(repo.GetAll());
+
+Console.WriteLine("About to Delete 110x90 Pine Post");
+Console.ReadLine();
+
+
+var productToDelete = repo.GetAll().FirstOrDefault(x=>x.Name.Equals("110 x 90 Pine post")).Id;
+
+if (productToDelete != 0)
+    repo.Delete(productToDelete);
+else
 {
-    Console.WriteLine($"{currentProduct.Id,-10}{currentProduct.Name, -30}{currentProduct.unitPrice /100,15:C}");
+    Console.WriteLine("Product does not exist.");
 }
-Console.WriteLine($"{new String('-', 80)}");
-Console.WriteLine($"{"Total",40}{context.Products.Sum(products=>products.unitPrice/100),15:C}");
+
+PrintProducts(repo.GetAll());
+
+void PrintProducts(IEnumerable<Product> products)
+{
+    Console.WriteLine("--------- PRINTING OUT PRODUCTS ----------------");
+    Console.WriteLine($"{"Id",-10}{"Name",-30}{"Unit Price",15}");
+    foreach (var currentProduct in products)
+    {
+        Console.WriteLine($"{currentProduct.Id,-10}{currentProduct.Name,-30}{currentProduct.unitPrice / 100,15:C}");
+    }
+
+    Console.WriteLine($"{new String('-', 80)}");
+    Console.WriteLine($"{"Total",40}{products.Sum(products => products.unitPrice / 100),15:C}");
+}
+
